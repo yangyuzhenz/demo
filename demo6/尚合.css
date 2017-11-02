@@ -1,0 +1,185 @@
+*{
+	margin:0;
+	padding:0;
+}
+.main1,.main2{
+	margin:0 auto;
+	text-align: center;
+	
+}
+.top{
+	height: 60px;
+}
+.top1{
+
+}
+.banner{
+	height: 55px;
+	background: url("images/nav-bg.png");
+}
+.banner ul{
+	list-style: none;
+	text-align: center;
+	width: 960px;
+	margin:0 auto;
+}
+.banner ul li{
+	float: left;
+	width: 130px;
+	height: 55px;
+	line-height: 55px;
+	background: url("images/nav-line.png") no-repeat right;
+	
+}
+.banner ul li a{
+	text-decoration: none;
+	font:700 16px "微软雅黑";
+	color: #000;
+}
+.main1{
+	width: 980px;
+	height: 665px;
+	
+}
+.banner1{
+	height: 30px;
+	line-height: 30px;
+	background:#FBFBFB url("images/share.png") no-repeat 1070px center;
+	
+}
+
+.banner1 a{
+	margin-left: 185px;
+	text-decoration: none;
+	color: #000;
+	font:700 14px "微软雅黑";
+}
+.main2{
+	width: 980px;
+	height: 345px;
+	
+}
+.main2 h5{
+	color:#7AB82A;
+	font-size: 14px;
+	text-align: left;
+	padding:10px 0 0 25px;
+}
+.left,.center,.right{
+	height: 225px;
+	margin-top: 15px;
+	float: left;
+	border:1px solid #ccc;
+	background: url("images/arrow.png") no-repeat 5px 12px;
+
+}
+.left{
+	width: 305px;
+	margin-right: 12px;
+	
+}
+.center{
+	width: 375px;
+	margin-right: 12px;
+}
+.center ul{
+	width: 330px;
+	list-style: none;
+	margin-left: 25px;
+}
+.center ul li{
+	border-bottom: 1px dotted #ccc;
+	text-align: left;
+	height: 27px;
+	line-height: 27px;
+	
+}
+.center ul li:first-child a{
+	color: red;
+	font:700 14px "微软雅黑";
+}
+.center ul li a{
+	font-size: 12px;
+	color: #666666;
+	text-decoration: none;
+}
+.right{
+	width: 270px;
+	
+}
+.right ul{
+	width: 330px;
+	list-style: none;
+	margin-left: 25px;
+}
+.right ul li{
+	
+	text-align: left;
+	height: 27px;
+	line-height: 27px;
+
+	}
+.right ul li a{
+	font-size: 12px;
+	color: #666666;
+	text-decoration: none;
+	border-left: 3px solid #7AB82A;
+	padding-left: 5px;
+}
+.right p{
+	font-size: 12px;
+	color:#666666;
+	text-align: left;
+	margin: 25px 0 0 25px; 
+	line-height: 20px;
+
+}
+.footer{
+	background: url("images/footer-bg.png");
+	background-size: 1350px 305px;
+	height: 305px;
+	
+}
+.footer ul:first-child li{
+	float: left;
+
+	
+}
+.footer ul:first-child{
+	margin-left: 220px;
+	/*color: white;*/
+}
+.footer ul{
+	list-style: none;
+	padding-top: 12px;
+	
+}
+.footer ul li{
+	width: 110px;
+	text-align: left;
+	height: 27px;
+	line-height: 27px;
+
+	}
+.footer ul li a{
+	font-size: 14px;
+	color: #707070;
+	text-decoration: none;
+	padding-left: 5px;
+}
+.footer .foot1 {
+	color: white;
+}
+.footer1{
+	height: 103px;
+	border-top:1px dashed #707070;
+	margin-top: 203px;
+
+}
+.footer1 p{
+	font:400 14px "微软雅黑";
+	margin:10px 0 0 373px;
+	line-height: 30px;
+
+}
+

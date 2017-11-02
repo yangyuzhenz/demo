@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+		div{
+			width: 120px;
+			height: 200px;
+			border: 1px solid pink;
+			margin:200px auto;
+			position: relative;
+
+		}
+		img{
+			width: 120px;
+			height: 200px;
+			position: absolute;
+			top:0;
+			left: 0;
+			transform-origin: top left;
+		}
+		img:hover{
+			transition:all 2s; 
+		}
+		div:hover img:first-child{
+			transform: rotate(30deg) skew(30deg);
+			/*transition:all 2s ease 1s;*/
+		}
+		div:hover img:nth-child(2){
+			transform: rotate(70deg) skew(30deg);
+			/*transition:all 0.5s ease-in 0.7s;*/
+		}
+		div:hover img:nth-child(3){
+			transform: rotate(100deg) skew(30deg);
+			/*transition:all 2s ease-in 0.6s;*/
+		}
+		div:hover img:nth-child(4){
+			transform: rotate(120deg) skew(30deg);
+			/*transition:all 2s ease-in 0.5s;*/
+		}
+		div:hover img:nth-child(5){
+			transform: rotate(-30deg) skew(30deg);
+			transform-origin: top right;
+			/*transition:all 2s ease 0.4s;*/
+		}
+		div:hover img:nth-child(6){
+			transform: rotate(-60deg) skew(30deg);
+			transform-origin: top right;
+			/*transition:all 2s ease 0.3s;*/
+		}
+		div:hover img:nth-child(7){
+			transform: rotate(-90deg) skew(30deg);
+			transform-origin: top right;
+		}
+		div:hover img:nth-child(8){
+			transform: rotate(-120deg) skew(30deg);
+			transform-origin: top right;
+			/*transition:all 2s ease 0.1s;*/
+		}
+		
+	</style>
+</head>
+<body>
+	
+		<div>
+			<img src="pk1.png" alt="">
+			<img src="pk1.png" alt="">
+			<img src="pk1.png" alt="">
+			<img src="pk1.png" alt="">
+			<img src="pk1.png" alt="">
+			<img src="pk1.png" alt="">
+			<img src="pk1.png" alt="">
+			<img src="pk1.png" alt="">
+		</div>
+</body>
+</html>

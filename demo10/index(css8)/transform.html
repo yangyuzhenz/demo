@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding: 0;
+		}
+		div{
+			width: 200px;
+			height: 200px;
+			background: pink;
+			position: absolute;
+			left: 50%;
+			top:50%;
+			transform: translate(-50%,-50%);
+			overflow: hidden;
+		}
+		img{	
+			
+			width: 200px;
+			height: 200px;	
+			transition: all 0.5s;
+		}
+		
+		img:hover{
+			transform: scale(1.5);
+		}
+	</style>
+</head>
+<body>
+	<div><img src="1.jpeg"></div>
+</body>
+</html>
