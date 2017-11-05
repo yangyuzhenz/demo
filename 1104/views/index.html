@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        .systemInfo {
+            color: red;
+        }
+    </style>
+</head>
+
+<body style="padding:3px;">
+    <h1>WebSocket聊天室 <small>当前在线人数：<span id="count">0</span></small></h1>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">发送消息</div>
+        <div class="panel-body">
+            <label>昵称： </label>
+            <input type="text" name="username" class="form-control" maxlength="20" id="name">
+
+            <br>
+
+            <label>消息：</label>
+            <textarea rows="4" class="form-control" maxlength="250" id="msg"></textarea>
+
+            <br>
+
+            <input type="button" value="发送消息" class="btn btn-primary pull-right" id="btnSend">
+        </div>
+    </div>
+
+    <ul class="list-group" id="msgList">
+        <!-- <li class="list-group-item">
+            <span class="badge">14</span> Cras justo odio
+        </li> -->
+    </ul>
+
+
+
+    <script src="/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(function() {
+            // 创建一个WebSocket客户端连接
+            var ws = new WebSocket('ws://192.168.179.90:3002');
+            ws.onopen = function() {
+                    console.log('客户端加载成功')
+                }
+                //监听 服务端发送过来的消息    
+            ws.onmessage = function(e) {
+                //通过e.data 来获取到服务端发过来的消息 
+                console.log(e.data)
+                    //讲服务端发过来的消息进行转换成对象 方便前端页面进行拼接数据   
+                var obj = JSON.parse(e.data)
+                console.log(obj)
+                    //拼接字符串 
+                var lis = `
+                <li class="list-group-item">
+                    <span class="badge">${obj.time}</span> 
+
+                 <strong class="${obj.type == 1 ? 'systemInfo':''}">  ${obj.name}  </strong>   说 ： ${obj.msg}
+                </li>
+                
+                `
+                    // 讲数据插入到页面中
+                $('#msgList').prepend(lis)
+                $('#count').html(obj.count)
+            }
+
+            $('#btnSend').on('click', function() {
+                // 获取输入框的name  和  msg 的值 
+                var name = $('#name').val().trim()
+                var msg = $('#msg').val().trim()
+                if (name.length <= 1 && msg.length <= 1) {
+                    return
+                }
+                //按钮点击后禁用 
+                $(this).attr('disabled', 'disabled')
+
+                setTimeout(function() {
+                        //1s 后讲按钮打开
+                        $('#btnSend').removeAttr('disabled')
+                    }, 1000)
+                    //讲客户端的内容通过 ws。send  发送到 服务端  服务端 在ws。on('message')里面监听
+                ws.send(JSON.stringify({
+                    name: name,
+                    msg: msg
+                }))
+
+                $('#name').val('')
+                $('#msg').val('')
+
+            })
+
+        })
+    </script>
+</body>
+
+</html>
