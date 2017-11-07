@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乐淘 - 后台管理系统首页</title>
+    <!--bootstrap  原生样式-->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!--字体图标-->
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.css">
+    <!--首页样式-->
+    <link rel="stylesheet" href="less/index.css">
+
+    <link rel="stylesheet" href="assets/nprogress/nprogress.css">
+
+    <link rel="stylesheet" href="assets/bootstraptable/bootstrap-table.css">
+    <script src="assets/nprogress/nprogress.js"></script>
+    <script src="assets/jquery/jquery.min.js"></script>
+    <!--start 文件上传需要依赖的js 文件-->
+    <script src="assets/jquery-fileupload/jquery.ui.widget.js"></script>
+    <script src="assets/jquery-fileupload/jquery.iframe-transport.js"></script>
+    <script src="assets/jquery-fileupload/jquery.fileupload.js"></script>
+    <!--end 文件上传需要依赖的js 文件-->
+
+    <style>
+            /*修改的是文件上传的按钮的样式*/
+            .input_style_file_upload {
+                padding: 4px 10px;
+                height: 20px;
+                line-height: 20px;
+                position: relative;
+                cursor: pointer;
+                color: #888;
+                background: #fafafa;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                overflow: hidden;
+                display: inline-block;
+                display: inline;
+                zoom: 1
+            }
+
+            .input_style_file_upload  input {
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
+                filter: alpha(opacity=0);
+                cursor: pointer
+            }
+
+            .input_style_file_upload:hover {
+                color: #444;
+                background: #eee;
+                border-color: #ccc;
+                text-decoration: none
+            }
+    </style>
+
+
+
+</head>
+<body>
+<!-- 侧边栏 -->
+<div class="aside">
+    <!-- 个人资料 -->
+    <div class="profile">
+        <!-- 头像 -->
+        <div class="avatar img-circle">
+            <img src="./images/my_logo.jpg">
+        </div>
+        <h4>张学友</h4>
+    </div>
+    <div class="navs">
+        <ul class="list-unstyled">
+            <li >
+                <a href="index.html"><i class="fa fa-user"></i> 用户管理</a>
+            </li>
+            <li>
+                <a href="javascript:;"><i class="fa fa-bars"></i>分类管理 <i class="fa fa-angle-right"></i></a>
+                <ul class="list-unstyled" style="display: block;">
+                    <li ><a href="categoryFirst.html">一级分类管理</a></li>
+                    <li class="active"><a href="categorySecond.html">二级分类管理</a></li>
+                </ul>
+            </li>
+            <li><a href="productList.html"><i class="fa fa-product-hunt"></i>商品管理</a></li>
+        </ul>
+    </div>
+</div>
+<!-- 主体 -->
+<div class="main">
+    <div class="container-fluid">
+        <div class="header">
+            <nav class="navbar navbar-custom">
+                <div class="navbar-header">
+                    <a href="javascript:;" class="navbar-brand">
+                        <i class="fa fa-navicon"></i>
+                    </a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="javascript:;" class="login_out_bot" data-toggle="modal" data-target=".bs-example-modal-sm">
+                            <i class="fa fa-sign-out"></i> 退出
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="body teacher-profile">
+            <div class="profile">
+                <div class="chart">
+                    <div id="main">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#brandWindowId">添加品牌</button>
+                            <table id="brandTableId"></table>
+                            <!-- Modal -->
+                            <div class="modal fade" id="brandWindowId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">添加品牌</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="">
+                                                    <!--品牌所属的分类 下拉框 -->
+                                                    <div class="dropdown">
+                                                        请选择分类:
+                                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownCategoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+
+                                                            <span class="caret"></span>
+
+                                                        </button>
+                                                        <ul class="dropdown-menu" id="categoryMenuId">
+                                                                <!--后台获取到的.-->
+                                                        </ul>
+                                                    </div>
+                                                <br>
+                                                    <!--品牌的名称-->
+                                                    <div>
+                                                        <input type="text" class="form-control" id="brandNameId" placeholder="请输入品牌的名称">
+                                                    </div>
+                                                    <!--品牌的logo-->
+                                                    <div style="margin-top: 24px;">
+                                                        <a href="" class="input_style_file_upload">
+                                                                请选择要上传的文件
+                                                                <input type="file" id="input_file_imgaeId" name="pic1" data-url="/category/addSecondCategoryPic">
+                                                        </a>
+                                                    </div>
+                                                    <div style="margin-top: 24px;border: 2px solid #ccc;width: 104px;height: 104px;display: none;" id="imagePreview"><!--图片预览的区域.--></div>
+                                                    <!--是否是热门品牌-->
+                                                    <div class="dropdown" style="margin-top: 24px;">
+                                                        是否是热门品牌:
+                                                        <button class="btn btn-default dropdown-toggle" type="button" id="hotMenuId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" id="hotMenudropId">
+                                                                <li><a href="#" id="1">是</a></li>
+                                                                <li><a href="#" id="0">否</a></li>
+                                                        </ul>
+                                                    </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default cancelBrandButton" data-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-primary okBrandButton">确定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/common.js"></script>
+<script src="js/indexUtils.js"></script>
+<script src="assets/bootstrap/js/bootstrap.js"></script>
+<script src="assets/bootstraptable/bootstrap-table.js"></script>
+<script src="assets/bootstraptable/bootstrap-table-zh-CN.js"></script>
+<script>
+        //要添加到服务器端品牌的数据.
+        var params={
+            categoryId:"",
+            //图片上传的地址
+            brandLogo:"",
+            hot:"",
+            //品牌的名称.
+            brandName:""
+        };
+        /*显示品牌的数据.*/
+        $("#brandTableId").bootstrapTable({
+             method:"get",
+             url:" /category/querySecondCategoryPaging",
+             queryParams:function(params){
+                params.page=1;
+                params.pageSize=10;
+                return params;
+             },
+             pageList:[10],
+            //开启服务端分页
+             sidePagination:"server",
+             rowStyle:function(row,index){
+                    row.brandLogo="<img src='"+row.brandLogo+"' style='width:100px;'>"
+                    return row;
+             },
+             columns:[
+                 {
+                     "title":"品牌编号",
+                     "field":"id"
+                 },
+                 {
+                     "title":"品牌的名称",
+                     "field":"brandName"
+                 },
+                 {
+                     "title":"品牌logo",
+                     "field":"brandLogo"
+                 }
+             ]
+        });
+        /*
+        * 1:获取一级分类的数据，渲染到下拉菜单.
+        * */
+        $.ajax({
+              url:"/category/queryTopCategoryPaging",
+              type:"get",
+              data:{
+                   page:1,
+                   pageSize:30
+              },
+              success:function(data){
+                  for(var i=0;i<data.rows.length;i++){
+
+                      //这里是获取下拉列表的数据，然后组装成li 元素.然后放在页面上面.
+                      var li="<li><a href='#' id='"+data.rows[i].id+"'>"+data.rows[i].categoryName+"</a></li>"
+                      $("#categoryMenuId").append(li);
+                  }
+              }
+        });
+
+        //给所有的下拉框的li 添加点击事件，点击li 元素，可以自动选中
+        $("#categoryMenuId").on("click","a",function(){
+                var categoryName=$(this).text();
+
+                //选中的分类对应的id，需要发送到后台去的.
+                params.categoryId=this.id;
+
+            //firstChild 得到是一个文本节点. 文本节点是不能使用innerHTML
+                $("#dropdownCategoryMenu")[0].firstChild.nodeValue="";
+                $("#dropdownCategoryMenu").prepend(categoryName);
+        })
+
+        /*文件上传的使用.*/
+        $("#input_file_imgaeId").fileupload({
+             autoLoad:true,
+             done:function(e,data){
+                 //服务端的数据通过data 返回.
+                 var src=data._response.result.picAddr;
+                 //这个地址页是要发送到服务器的.
+                 params.brandLogo=src;
+                 //这个也是地址.
+                 //预览图片.
+                 //创建img ，放在对应的区域
+                 var img=document.createElement("img");
+                 img.src=src;
+                 img.style.width="100px";
+                 img.style.height="100px";
+                 $("#imagePreview").html(img);
+                 //图片的盒子.
+                 $("#imagePreview").fadeIn(1000);
+             }
+        });
+
+        /*是否是热门品牌的下拉列表选中.*/
+        $("#hotMenudropId li a").on("click",function(){
+              var text=$(this).text();
+              //是否是热门品牌的，也需要发送给服务器.
+              params.hot=this.id;
+              //改下拉列表框的值.
+              $("#hotMenuId")[0].firstChild.nodeValue=text;
+        });
+
+        //点击确定，获取品牌相关的数据，发送到服务器，关闭这个弹出框，刷新这个表格.
+        $(".okBrandButton").on("click",function(){
+              //准备数据
+              params.brandName=$("#brandNameId").val();
+              //发送请求之前要对params 里面的key 对应 的值进行判断，
+             //发送请求
+             $.ajax({
+                 url:"/category/addSecondCategory",
+                 type:"post",
+                 data:params,
+                 success:function(data){
+                        //上传成功:
+                        if(data.success){
+                               //关闭弹出框
+                                $(".cancelBrandButton").click();
+                                 //刷新表格.
+                               $("#brandTableId").bootstrapTable("refresh");
+                        }
+                 }
+             })
+        });
+</script>
+</body>
+</html>

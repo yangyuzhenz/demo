@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>乐淘 - 后台管理系统首页</title><link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="./assets/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="./less/index.css"><link rel="stylesheet" href="assets/nprogress/nprogress.css"><link rel="stylesheet" href="assets/bootstraptable/bootstrap-table.css"><script src="assets/jquery/jquery.min.js"></script></head><body><div class="aside"><div class="profile"><div class="avatar img-circle"><img src="./images/my_logo.jpg"></div><h4>张学友</h4></div><div class="navs"><ul class="list-unstyled"><li class="active"><a href="index.html"><i class="fa fa-user"></i> 用户管理</a></li><li><a href="javascript:;"><i class="fa fa-bars"></i>分类管理 <i class="fa fa-angle-right"></i></a><ul class="list-unstyled"><li><a href="categoryFirst.html">一级分类管理</a></li><li><a href="categorySecond.html">二级分类管理</a></li></ul></li><li><a href="productList.html"><i class="fa fa-product-hunt"></i>商品管理</a></li><li><a href="productDataShow.html"><i class="fa fa-print"></i>报表管理</a></li></ul></div></div><div class="main"><div class="container-fluid"><div class="header"><nav class="navbar navbar-custom"><div class="navbar-header"><a href="javascript:;" class="navbar-brand"><i class="fa fa-navicon"></i></a></div><ul class="nav navbar-nav navbar-right"><li><a href="javascript:;" class="login_out_bot" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-sign-out"></i> 退出</a></li></ul></nav></div><div class="body teacher-profile"><div class="profile"><div class="chart"><div id="main"><table id="userTableId"></table></div></div></div></div></div></div><script src="assets/nprogress/nprogress.js"></script><script src="js/common.js"></script><script src="js/indexUtils.js"></script><script src="assets/bootstrap/js/bootstrap.js"></script><script src="assets/bootstraptable/bootstrap-table.js"></script><script src="assets/bootstraptable/bootstrap-table-zh-CN.js"></script><script>/*画页面，画表格,展示用户信息的数据的表格.*/
+    //有这样的一个方法帮助我们怎么去画表格.
+    $("#userTableId").bootstrapTable({
+            url:"/user/queryUser",
+            method:"get",
+            //在请求服务器的时候，通过该函数可以设置参数
+            //params 里面有一些默认的参数.
+            //通过params 去设置参数
+            //params 是一个对象.
+            queryParams:function(params){
+                //指定参数，发送参数给服务器.
+                //这个回调函数什么时候调用，每次发送请求之前，都会通过这个回调函数去设置参数.
+                //console.log(params);
+                //如果是第一页，params offset=0
+                //如果是第二页，params offset=10
+                //如果是第三页，params offset=20
+                params.page=(params.offset/10)+1;
+                params.pageSize=10;
+                return params;
+            },
+            //要把数据显示在客户端,服务器的数据已经过来了.
+            pagination:true,
+            /*开启服务器端分页.
+            * 服务端给我返回的数据就必须是这样的格式
+            * 要求服务端的数据必须是这样的一个格式，这个是插件规定的。
+            * rows:[{},{},{}] //多行，当前页的数据.
+            * total:12,总记录数，数据库里面有多少条. 你给了总记录
+            * 客户端bootstrap table 根据总记录数就可以计算出来有多少页.
+            * */
+            sidePagination:"server",
+            //添加一个参数，指定分页的条数,
+            pageList:[10],
+
+            columns:[
+                {
+                    checkbox:true
+                },
+                {
+                    title:"用户名",
+                    field:"username"
+                },
+                {
+                    title:"手机号",
+                    field:"mobile"
+                },
+                {
+                    title:"是否禁用",
+                    field:"isDisable"
+                },
+                {
+                    title:"操作",
+                    field:"operation"
+                }
+            ],
+            //还有回调函数，rowStyle,每一行的数据渲染之前，都会调用这个回调函数.
+            rowStyle:function(row,index){
+                if(row.isDelete==1){
+                    row.isDisable="已启用";
+                    row.operation="<a href='#' id='"+row.id+"' class='btn btn-danger disableButton'>禁用</a>";
+                }else{
+                    row.isDisable="<font color='red'>已禁用</font>";
+                    row.operation="<a href='#' id='"+row.id+"' class='btn btn-success enableButton'>启用</a>";
+                }
+                //row 代表每一行的数据.
+                return row;
+            },
+            //有一个回调函数，onLoadSuccess 数据加载完毕渲染之后触发.
+            onLoadSuccess:function(){
+
+                var changeStatus=function(userId,isDelete,message){
+                    //发送ajax 请求，去后台禁用这条记录
+                    $.ajax({
+                        url:"/user/updateUser",
+                        type:"post",
+                        data:{
+                            id:userId,
+                            isDelete:isDelete
+                        },
+                        success:function(data){
+                            if(data.success){
+                                alert(message);
+                                //重新去刷新这个table
+                                //传递这个refresh 的方法名,底层会重新去加载这个表格，渲染数据.
+                                $("#userTableId").bootstrapTable("refresh");
+                            }
+                        }
+                    })
+                }
+
+                //禁用
+                $(".disableButton").on("click",function(){
+                         var userId=this.id;
+                         //禁用
+                         changeStatus(userId,0,"禁用成功");
+                });
+                //启用
+                $(".enableButton").on("click",function(){
+                      var userId=this.id;
+                      //禁用
+                      changeStatus(userId,1,"启用成功");
+                });
+            }
+    });</script></body></html>

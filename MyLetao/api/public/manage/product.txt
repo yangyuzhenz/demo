@@ -1,0 +1,7 @@
+[
+    {"productName":"nike跑步鞋","number":2000},
+    {"productName":"牛逼鞋","number":10000},
+    {"productName":"凡客","number":100},
+    {"productName":"李宁透气跑步鞋","number":200},
+    {"productName":"达芙妮女子跑步鞋","number":4000}
+]

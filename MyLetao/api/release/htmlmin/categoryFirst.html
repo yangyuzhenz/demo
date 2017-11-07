@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>乐淘 - 后台管理系统首页</title><link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="assets/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="less/index.css"><link rel="stylesheet" href="assets/nprogress/nprogress.css"><link rel="stylesheet" href="assets/bootstraptable/bootstrap-table.css"><script src="assets/nprogress/nprogress.js"></script><script src="assets/jquery/jquery.min.js"></script></head><body><div class="aside"><div class="profile"><div class="avatar img-circle"><img src="./images/my_logo.jpg"></div><h4>张学友</h4></div><div class="navs"><ul class="list-unstyled"><li><a href="index.html"><i class="fa fa-user"></i> 用户管理</a></li><li><a href="javascript:;"><i class="fa fa-bars"></i>分类管理 <i class="fa fa-angle-right"></i></a><ul class="list-unstyled" style="display: block"><li class="active"><a href="categoryFirst.html">一级分类管理</a></li><li><a href="categorySecond.html">二级分类管理</a></li></ul></li><li><a href="productList.html"><i class="fa fa-product-hunt"></i>商品管理</a></li></ul></div></div><div class="main"><div class="container-fluid"><div class="header"><nav class="navbar navbar-custom"><div class="navbar-header"><a href="javascript:;" class="navbar-brand"><i class="fa fa-navicon"></i></a></div><ul class="nav navbar-nav navbar-right"><li><a href="javascript:;" class="login_out_bot" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="fa fa-sign-out"></i> 退出</a></li></ul></nav></div><div class="body teacher-profile"><div class="profile"><div class="chart"><div id="main"><a href="#" class="btn btn-success" data-toggle="modal" data-target="#addCategoryWindow"><i class="glyphicon glyphicon-plus-sign">添加</i></a><div class="modal fade" id="addCategoryWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">添加分类</h4></div><div class="modal-body"><form action=""><input type="text" id="categoryNameId" class="form-control" placeholder="请输入分类的名称"></form></div><div class="modal-footer"><button type="button" class="btn btn-default cancelCategoryButton" data-dismiss="modal">取消</button> <button type="button" class="btn btn-primary addCategoryButton">确定</button></div></div></div></div><table id="categoryTableId"></table></div></div></div></div></div></div><script src="js/common.js"></script><script src="js/indexUtils.js"></script><script src="assets/bootstrap/js/bootstrap.js"></script><script src="assets/bootstraptable/bootstrap-table.js"></script><script src="assets/bootstraptable/bootstrap-table-zh-CN.js"></script><script>$("#categoryTableId").bootstrapTable({
+             method:"get",
+             url:"/category/queryTopCategoryPaging",
+             queryParams:function(params){
+                   params.page=1;
+                   params.pageSize=10;
+                   return params;
+             },
+             pageList:[10],
+             //开启服务端分页
+             sidePagination:"server",
+            /* showRefresh:true,*/
+             columns:[
+                 {
+                     "title":"分类编号",
+                     "field":"id"
+                 },
+                 {
+                     "title":"分类的名称",
+                     "field":"categoryName"
+                 }
+             ]
+      });
+      //添加分类的数据.
+      $(".addCategoryButton").on("click",function(){
+                //获取分类的名称.
+                var categoryName=$("#categoryNameId").val();
+                $.ajax({
+                    type:"post",
+                    url:"/category/addTopCategory",
+                    data:{
+                        categoryName:categoryName
+                    },
+                    success:function(data){
+                         if(data.success){
+
+                              //触发取消按钮的点击事件.
+                              $(".cancelCategoryButton").click();
+                              //刷新这个table
+                              $("#categoryTableId").bootstrapTable("refresh");
+                              alert("添加成功");
+                         }
+                    }
+                })
+      });</script></body></html>
